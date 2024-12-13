@@ -210,38 +210,38 @@ uvicorn app:app --reload
 - **If Completed Successfully**:
 
   ```json
-{
-  "results": {
-    "style": [
-      {
-        "line_number": 7,
-        "issue": "Imports are not grouped by standard libraries, third-party libraries, and local application imports.",
-        "suggestion": "Group imports into three sections: standard libraries, third-party libraries, and local imports."
-      },
-    ],
-    "bug": [
-      {
-        "line_number": 78,
-        "issue": "Potential issue with hardcoded 'flash_attention_2' argument.",
-        "suggestion": "Verify if 'flash_attention_2' is a valid option for the 'attn_implementation' parameter."
-      },
-    ],
-    "performance": [
-      {
-        "line_number": 109,
-        "issue": "Commented out 'torch.compile(model)' which can improve performance.",
-        "suggestion": "Consider enabling 'torch.compile' for potential performance improvement."
-      },
-    ],
-    "best_practice": [
-      {
-        "line_number": 57,
-        "issue": "Direct exit using 'sys.exit' is not recommended.",
-        "suggestion": "Use exception handling to exit the program gracefully."
-      },
-    ]
-  }
-}
+   {
+   "results": {
+      "style": [
+         {
+         "line_number": 7,
+         "issue": "Imports are not grouped by standard libraries, third-party libraries, and local application imports.",
+         "suggestion": "Group imports into three sections: standard libraries, third-party libraries, and local imports."
+         },
+      ],
+      "bug": [
+         {
+         "line_number": 78,
+         "issue": "Potential issue with hardcoded 'flash_attention_2' argument.",
+         "suggestion": "Verify if 'flash_attention_2' is a valid option for the 'attn_implementation' parameter."
+         },
+      ],
+      "performance": [
+         {
+         "line_number": 109,
+         "issue": "Commented out 'torch.compile(model)' which can improve performance.",
+         "suggestion": "Consider enabling 'torch.compile' for potential performance improvement."
+         },
+      ],
+      "best_practice": [
+         {
+         "line_number": 57,
+         "issue": "Direct exit using 'sys.exit' is not recommended.",
+         "suggestion": "Use exception handling to exit the program gracefully."
+         },
+      ]
+   }
+   }
    ```  
 
 - **If Result Not Ready**:
