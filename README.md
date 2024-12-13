@@ -34,7 +34,7 @@ The **Autonomous Code Review Agent** is a system designed to automate the analys
 
 - **Automated PR Analysis**: Analyze GitHub pull requests for various code quality metrics.
 - **Asynchronous Processing**: Utilize Celery for handling tasks asynchronously, ensuring non-blocking operations.
-- **AI-Powered Insights**: Integrate with language models (e.g., OpenAI, Ollama) to provide in-depth code analysis.
+- **AI-Powered Insights**: Integrate with language models (e.g., OpenAI) to provide in-depth code analysis.
 - **Task Identification**: Each analysis task is assigned a unique `task_id` for tracking and result retrieval.
 - **API Integration**: Interact seamlessly with developers through a structured FastAPI-based API.
 - **Scalable Architecture**: Designed to handle multiple analyses concurrently with Redis as the message broker and result backend.
@@ -45,7 +45,7 @@ The **Autonomous Code Review Agent** is a system designed to automate the analys
 - **Web Framework**: FastAPI
 - **Task Queue**: Celery
 - **Message Broker & Backend**: Redis or PostgreSQL
-- **AI Integration**: Any LLM API (e.g., OpenAI) or Ollama for local model execution
+- **AI Integration**: OpenAI integration
 - **Testing Framework**: pytest
 
 ### Installation
@@ -242,7 +242,7 @@ uvicorn app:app --reload
     ]
   }
 }
-```  ```
+   ```  
 
 - **If Result Not Ready**:
 
@@ -276,21 +276,6 @@ The project uses `pytest` for testing. Follow the steps below to run the test su
 
    ```bash
    pytest
-   ```
-
-   **Expected Output**:
-
-   ```
-========================= test session starts ==========================
-platform linux -- Python 3.9.16, pytest-8.3.4, pluggy-1.5.0
-rootdir: /home/navcore/Desktop/ML/TakeHomeProject
-plugins: anyio-3.7.1
-collected 6 items                                                      
-
-test_app.py ...                                                  [ 50%]
-test_tasks.py ...                                                [100%]
-
-========================== 6 passed in 1.25s ===========================
    ```
 
 
