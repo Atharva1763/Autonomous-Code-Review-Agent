@@ -48,17 +48,6 @@ The **Autonomous Code Review Agent** is a system designed to automate the analys
 - **AI Integration**: Any LLM API (e.g., OpenAI) or Ollama for local model execution
 - **Testing Framework**: pytest
 
-## Project Setup
-
-### Prerequisites
-
-Ensure you have the following installed on your system:
-
-- **Python**: Version 3.8 or higher
-- **Redis**: If opting for Redis as the message broker and backend
-- **Git**: For cloning repositories
-- **Ollama** (Optional): If you prefer running language models locally
-
 ### Installation
 
 1. **Clone the Repository**
@@ -105,19 +94,13 @@ Ensure you have the following installed on your system:
    CELERY_RESULT_BACKEND=redis://localhost:6379/0
 
    # AI Settings
-   # Choose either OpenAI or Ollama
-
    # For OpenAI
    OPENAI_API_KEY=your_openai_api_key
-
-   # For Ollama
-   # OLLAMA_MODEL_NAME=your_ollama_model
    ```
 
    **Notes:**
 
    - **OpenAI Integration**: If you're using OpenAI's API, ensure you set the `OPENAI_API_KEY`.
-   - **Ollama Integration**: If you prefer running language models locally with Ollama, set the `OLLAMA_MODEL_NAME` and ensure Ollama is installed and running.
 
 2. **Apply Environment Variables**
 
@@ -165,8 +148,6 @@ source venv/bin/activate
 uvicorn app:app --reload
 ```
 
-- Access the API documentation at [http://localhost:8000/docs](http://localhost:8000/docs)
-
 ## API Documentation
 
 ### POST `/analyze-pr`
@@ -197,16 +178,6 @@ uvicorn app:app --reload
 
 - `task_id` (string): The unique identifier for the analysis task.
 
-**Example**:
-
-```bash
-curl -X POST "http://localhost:8000/analyze-pr" \
-     -H "Content-Type: application/json" \
-     -d '{
-           "repo_url": "https://github.com/user/repo.git",
-           "pr_number": 123
-         }'
-```
 
 ### GET `/status/{task_id}`
 
@@ -225,11 +196,6 @@ curl -X POST "http://localhost:8000/analyze-pr" \
 }
 ```
 
-**Example**:
-
-```bash
-curl -X GET "http://localhost:8000/status/abc123"
-```
 
 ### GET `/results/{task_id}`
 
@@ -284,12 +250,6 @@ curl -X GET "http://localhost:8000/status/abc123"
   }
   ```
 
-**Example**:
-
-```bash
-curl -X GET "http://localhost:8000/results/abc123"
-```
-
 ## Testing
 
 ### Running Tests
@@ -329,67 +289,6 @@ The project uses `pytest` for testing. Follow the steps below to run the test su
    ============================== 4 passed in 0.12s ===============================
    ```
 
-### Test Coverage
-
-To check test coverage, install `pytest-cov`:
-
-```bash
-pip install pytest-cov
-```
-
-Run tests with coverage report:
-
-```bash
-pytest --cov=.
-```
-
-**Example Output**:
-
-```
-============================= test session starts ==============================
-platform linux -- Python 3.9.7, pytest-7.1.2, pluggy-1.0.0
-rootdir: /path/to/autonomous-code-review-agent
-plugins: cov-3.0.0
-collected 4 items
-
-tests/test_tasks.py ....                                               [100%]
-
----------- coverage: platform linux, python 3.9.7-final-0 -----------
-Name                   Stmts   Miss  Cover
-----------------------------------------
-tasks.py                   60      3    95%
-ai_agent.py               40      0   100%
-app.py                    50      2    96%
-----------------------------------------
-TOTAL                     150      5    97%
-
-============================== 4 passed in 0.15s ===============================
-```
-
-## Environment Variables
-
-The application uses environment variables for configuration. Below is the `.env.example` file outlining the necessary variables.
-
-**`.env.example`**
-
-```ini
-# FastAPI settings
-FASTAPI_HOST=127.0.0.1
-FASTAPI_PORT=8000
-
-# Celery settings
-CELERY_BROKER_URL=redis://localhost:6379/0
-CELERY_RESULT_BACKEND=redis://localhost:6379/0
-
-# AI Settings
-# Choose either OpenAI or Ollama
-
-# For OpenAI
-OPENAI_API_KEY=your_openai_api_key
-
-# For Ollama
-# OLLAMA_MODEL_NAME=your_ollama_model
-```
 
 **Instructions**:
 
@@ -417,89 +316,3 @@ OPENAI_API_KEY=your_openai_api_key
    export $(cat .env | xargs)
    ```
 
-### Example Workflow
-
-1. **Initiate Analysis**
-
-   Send a POST request to `/analyze-pr` with the repository URL and PR number.
-
-   **Request**:
-
-   ```json
-   {
-     "repo_url": "https://github.com/user/repo.git",
-     "pr_number": 123
-   }
-   ```
-
-   **Response**:
-
-   ```json
-   {
-     "task_id": "3d4544f6-75ba-433a-a4f7-4aa0870dbfdc"
-   }
-   ```
-
-2. **Check Task Status**
-
-   Use the provided `task_id` to check the status.
-
-   **Request**:
-
-   ```bash
-   GET /status/3d4544f6-75ba-433a-a4f7-4aa0870dbfdc
-   ```
-
-   **Response**:
-
-   ```json
-   {
-     "task_id": "3d4544f6-75ba-433a-a4f7-4aa0870dbfdc",
-     "status": "COMPLETED" // Possible values: PENDING, STARTED, SUCCESS, FAILURE
-   }
-   ```
-
-3. **Retrieve Analysis Results**
-
-   Once the task status is `COMPLETED`, retrieve the results.
-
-   **Request**:
-
-   ```bash
-   GET /results/3d4544f6-75ba-433a-a4f7-4aa0870dbfdc
-   ```
-
-   **Response**:
-
-   ```json
-   {
-     "task_id": "3d4544f6-75ba-433a-a4f7-4aa0870dbfdc",
-     "status": "completed",
-     "results": {
-       "files": [
-         {
-           "name": "main.py",
-           "issues": [
-             {
-               "type": "style",
-               "line": 15,
-               "description": "Line too long",
-               "suggestion": "Break line into multiple lines"
-             },
-             {
-               "type": "bug",
-               "line": 23,
-               "description": "Potential null pointer",
-               "suggestion": "Add null check"
-             }
-           ]
-         }
-       ],
-       "summary": {
-         "total_files": 1,
-         "total_issues": 2,
-         "critical_issues": 1
-       }
-     }
-   }
-   ```
