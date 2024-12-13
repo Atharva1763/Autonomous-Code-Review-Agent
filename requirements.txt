@@ -1,6 +1,18 @@
-fastapi
-uvicorn
-celery
-redis
+# Web Framework
+fastapi==0.70.0
+uvicorn==0.15.0
+
+# AI Integration
 langchain
-openai
+openai==0.28.0
+
+# Task Queue
+celery==5.2.3
+redis==4.1.0
+
+# Testing
+pytest==7.1.2
+pytest-cov==3.0.0
+
+# Environment Variables Management
+python-dotenv==0.19.2
