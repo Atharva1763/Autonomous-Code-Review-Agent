@@ -44,7 +44,6 @@ def analyze_pr_task(repo_url, pr_number, github_token=None):
     os.chdir('/tmp')
 
     with tempfile.TemporaryDirectory() as repo_dir:
-        # Clone the repository with retries and optional token
         clone_repository(repo_url, repo_dir, token=github_token)
         os.chdir(repo_dir)
 
@@ -61,13 +60,13 @@ def analyze_pr_task(repo_url, pr_number, github_token=None):
                     with open(file_path, 'r') as f:
                         code_content = f.read()
                     code_files.append({
-                        'file_name': os.path.relpath(file_path, repo_dir),  # Relative path for clarity
+                        'file_name': os.path.relpath(file_path, repo_dir),  
                         'code': code_content
                     })
 
         # Retrieve the current task's ID
-        task_id = current_task.request.id  # Obtain Celery's task ID
+        task_id = current_task.request.id
 
         # Analyze code with task_id
-        results = analyze_code(code_files, task_id=task_id)  # Pass task_id to analyze_code
+        results = analyze_code(code_files, task_id=task_id)  
         return results

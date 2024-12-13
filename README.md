@@ -210,37 +210,39 @@ uvicorn app:app --reload
 - **If Completed Successfully**:
 
   ```json
-  {
-    "task_id": "abc123",
-    "status": "completed",
-    "results": {
-      "files": [
-        {
-          "name": "main.py",
-          "issues": [
-            {
-              "type": "style",
-              "line": 15,
-              "description": "Line too long",
-              "suggestion": "Break line into multiple lines"
-            },
-            {
-              "type": "bug",
-              "line": 23,
-              "description": "Potential null pointer",
-              "suggestion": "Add null check"
-            }
-          ]
-        }
-      ],
-      "summary": {
-        "total_files": 1,
-        "total_issues": 2,
-        "critical_issues": 1
-      }
-    }
+{
+  "results": {
+    "style": [
+      {
+        "line_number": 7,
+        "issue": "Imports are not grouped by standard libraries, third-party libraries, and local application imports.",
+        "suggestion": "Group imports into three sections: standard libraries, third-party libraries, and local imports."
+      },
+    ],
+    "bug": [
+      {
+        "line_number": 78,
+        "issue": "Potential issue with hardcoded 'flash_attention_2' argument.",
+        "suggestion": "Verify if 'flash_attention_2' is a valid option for the 'attn_implementation' parameter."
+      },
+    ],
+    "performance": [
+      {
+        "line_number": 109,
+        "issue": "Commented out 'torch.compile(model)' which can improve performance.",
+        "suggestion": "Consider enabling 'torch.compile' for potential performance improvement."
+      },
+    ],
+    "best_practice": [
+      {
+        "line_number": 57,
+        "issue": "Direct exit using 'sys.exit' is not recommended.",
+        "suggestion": "Use exception handling to exit the program gracefully."
+      },
+    ]
   }
-  ```
+}
+```  ```
 
 - **If Result Not Ready**:
 
@@ -279,15 +281,17 @@ The project uses `pytest` for testing. Follow the steps below to run the test su
    **Expected Output**:
 
    ```
-   ============================= test session starts ==============================
-   platform linux -- Python 3.9.7, pytest-7.1.2, pluggy-1.0.0
-   rootdir: /path/to/autonomous-code-review-agent
-   collected 4 items
+========================= test session starts ==========================
+platform linux -- Python 3.9.16, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/navcore/Desktop/ML/TakeHomeProject
+plugins: anyio-3.7.1
+collected 6 items                                                      
 
-   tests/test_tasks.py ....                                               [100%]
+test_app.py ...                                                  [ 50%]
+test_tasks.py ...                                                [100%]
 
-   ============================== 4 passed in 0.12s ===============================
-   ```
+========================== 6 passed in 1.25s ===========================
+```
 
 
 **Instructions**:

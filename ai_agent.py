@@ -11,7 +11,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')  # Required if using OpenAI
 
 def analyze_code(code_files,task_id):
-    llm = ChatOpenAI(model_name='gpt-4o-2024-08-06', openai_api_key = OPENAI_API_KEY)
+    llm = ChatOpenAI(model_name='gpt-3.5-turbo', openai_api_key = OPENAI_API_KEY)
     prompt = PromptTemplate(
         input_variables=["file_name", "code"],
         template="""
@@ -47,6 +47,5 @@ Only output valid JSON. DON'T output any other text or data.
             analysis = json.loads(result)
             analysis_results.append(analysis)
         except json.JSONDecodeError:
-            # Handle parsing errors
             pass
     return analysis_results
